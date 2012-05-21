@@ -13,22 +13,29 @@
 
 <div class="left">
     <div class="main-content">
-        <c:forEach items="${sessionScope.game.getCardsList()}" var="card" varStatus="status">
-            <c:choose>
-                <c:when test="${!card.isFacing()}">
-                    <a href="Game?action=turn&position=${status.count}"><img src="themes/${sessionScope.theme}/back.gif" /></a>
-                </c:when>
-                <c:when test="${card.getIdCard() < 10}">
-                    <img src="themes/${sessionScope.theme}/0${card.getIdCard()}.gif" />
-                </c:when>
-                <c:otherwise>
-                    <img src="themes/${sessionScope.theme}/${card.getIdCard()}.gif" />
-                </c:otherwise>
-            </c:choose>
-            <c:if test="${status.count % sessionScope.game.getWidth() == 0}">
-                <br />
-            </c:if>
-        </c:forEach>
+        <c:choose>
+            <c:when test="${requestScope.gameFinished}">
+                <h3>Konec hry.</h3>
+            </c:when>
+            <c:otherwise>
+                <c:forEach items="${sessionScope.game.getCardsList()}" var="card" varStatus="status">
+                    <c:choose>
+                        <c:when test="${!card.isFacing()}">
+                            <a href="Game?action=turn&position=${status.count}"><img src="themes/${sessionScope.theme}/back.gif" /></a>
+                        </c:when>
+                        <c:when test="${card.getIdCard() < 10}">
+                            <img src="themes/${sessionScope.theme}/0${card.getIdCard()}.gif" />
+                        </c:when>
+                        <c:otherwise>
+                            <img src="themes/${sessionScope.theme}/${card.getIdCard()}.gif" />
+                        </c:otherwise>
+                    </c:choose>
+                    <c:if test="${status.count % sessionScope.game.getWidth() == 0}">
+                        <br />
+                    </c:if>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 

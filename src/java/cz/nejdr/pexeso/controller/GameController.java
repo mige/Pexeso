@@ -41,11 +41,17 @@ public class GameController extends HttpServlet {
             viewUrl = "/index.jsp";
         } else {
             String action = request.getParameter("action");
+            Game game = (Game) session.getAttribute("game");
+
             if (action != null && action.compareTo("turn") == 0) {
-                Game game = (Game) session.getAttribute("game");
                 int position = Integer.parseInt(request.getParameter("position")) - 1;
                 game.turnTheCard(position);
             }
+
+            if (game.isGameFinished()) {
+                request.setAttribute("gameFinished", true);
+            }
+
         }
 
         RequestDispatcher rd = getServletContext().getRequestDispatcher(viewUrl);

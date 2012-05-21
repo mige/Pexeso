@@ -25,17 +25,15 @@
                     <img src="themes/${sessionScope.theme}/${card.getIdCard()}.gif" />
                 </c:otherwise>
             </c:choose>
-            <c:choose>
-                <c:when test="${status.count % sessionScope.game.getWidth() == 0}">
-                    <br />
-                </c:when>
-            </c:choose>
+            <c:if test="${status.count % sessionScope.game.getWidth() == 0}">
+                <br />
+            </c:if>
         </c:forEach>
     </div>
 </div>
 
 <div class="right">
-    Hráč: ${sessionScope.username}
+    Na řadě je hráč: ${sessionScope.game.getNowPlayingPlayer().getName()}
     <%@include file="/stats.jspf" %>
 </div>
 

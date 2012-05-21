@@ -5,10 +5,22 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%-- JSTL core --%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@include file="/header.jspf" %>
+
+<c:if test="${!empty requestScope.error}">
+        <h2 class="error">${requestScope.error}</h2>
+</c:if>
 
 <form action="NewGame">
     <table class="main-content">
+        <tr>
+            <td>Jméno hráče:</td>
+            <td><input type="text" name="user" /></td>
+        </tr>
         <tr>
             <td>Jméno hráče:</td>
             <td><input type="text" name="user" /></td>

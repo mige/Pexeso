@@ -12,9 +12,16 @@
 <%@include file="/header.jspf" %>
 
 <div class="right">
+    <h3>Aktuální hra</h3>
+    <table class="stats">
+        <tr>
+            <th>Hráč</th>
+            <th>Nalezeno dvojic</th>
+        </tr>
     <c:forEach items="${sessionScope.game.getPlayers()}" var="player">
-        ${player.getName()} ${player.getScore()}
+        ${player}
     </c:forEach>
+    </table>
     <%@include file="/stats.jspf" %>
 </div>
 

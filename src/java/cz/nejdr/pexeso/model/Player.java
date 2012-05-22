@@ -36,4 +36,10 @@ public class Player implements Serializable{
     {
         score++;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "<tr><td>" + this.name + "</td><td>" + this.score + "</td></tr>";
+    }
 }

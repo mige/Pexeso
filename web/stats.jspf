@@ -2,10 +2,10 @@
 <%@page pageEncoding="UTF-8"%>
 
 <h3>Statistika</h3>
-<table>
+<table class="stats">
     <tr>
-        <th>Jméno</th>
-        <th>Počet vítězství</th>
+        <th>Hráč</th>
+        <th>Výher</th>
     </tr>
 </table>
 

@@ -25,6 +25,25 @@ table
     margin-right: auto;
 }
 
+table.stats
+{
+    border-collapse: collapse;
+    border-radius: 3px;
+    border: 1px solid #D7D7D7;
+    font-size: 0.9em;
+}
+
+.stats td,th
+{
+    border: 1px solid #D7D7D7;
+    width: 120px;
+}
+
+.stats td
+{
+    color: #333333;
+}
+
 input
 {
     border: 1px solid #C4C4C4;

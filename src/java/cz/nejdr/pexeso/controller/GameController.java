@@ -2,6 +2,7 @@ package cz.nejdr.pexeso.controller;
 
 import cz.nejdr.pexeso.model.Game;
 import cz.nejdr.pexeso.model.Player;
+import cz.nejdr.pexeso.model.Stats;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -63,7 +64,10 @@ public class GameController extends HttpServlet {
                     }
                     request.setAttribute("winnertext", "Hra skončila remízou pro: " + winnersNames);
                 } else {
-                    request.setAttribute("winnertext", "Vítězem je: " + winners.get(0).getName());
+                    Player winner = winners.get(0);
+                    request.setAttribute("winnertext", "Vítězem je: " + winner.getName());
+                    Stats stats = (Stats) session.getAttribute("stats");
+                    stats.AddWinner(winner);
                 }
             } else if (game.isSecondCardFacing()) {
                 request.setAttribute("refresh", true);

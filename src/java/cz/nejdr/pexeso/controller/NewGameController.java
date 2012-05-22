@@ -2,6 +2,7 @@ package cz.nejdr.pexeso.controller;
 
 import cz.nejdr.pexeso.model.Game;
 import cz.nejdr.pexeso.model.Player;
+import cz.nejdr.pexeso.model.Stats;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -54,6 +55,11 @@ public class NewGameController extends HttpServlet {
 
                 session.setAttribute("game", newGame);
                 session.setAttribute("theme", theme);
+
+                if (session.getAttribute("stats") == null) {
+                    Stats stats = new Stats();
+                    session.setAttribute("stats", stats);
+                }
             }
         } catch (NumberFormatException ex) {
             request.setAttribute("error", "Nepodařilo se zjistit velikost hracího pole.");

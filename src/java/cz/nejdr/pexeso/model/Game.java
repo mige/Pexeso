@@ -44,6 +44,11 @@ public class Game implements Serializable {
     public void addPlayer(Player player) {
         players.add(player);
     }
+    
+    public ArrayList<Player> getPlayers()
+    {
+        return players;
+    }
 
     public Player getNowPlayingPlayer() {
         if (players.isEmpty()) {

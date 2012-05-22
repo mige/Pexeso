@@ -47,10 +47,16 @@ public class GameController extends HttpServlet {
                 int position = Integer.parseInt(request.getParameter("position")) - 1;
                 game.turnTheCard(position);
             }
+            else
+            {
+                game.hideFacingCards();
+            }
 
             if (game.isGameFinished()) {
                 request.setAttribute("gameFinished", true);
             }
+            else if(game.isSecondCardFacing())
+                request.setAttribute("refresh", true);
 
         }
 

@@ -51,7 +51,10 @@ select, .submit
 
 .left
 {
-    float: left;
+    /*float: left;*/
+    width: 585px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .right
@@ -71,4 +74,23 @@ select, .submit
     border-radius: 3px;
     font-size: 1.2em;
     padding: 6px;
+}
+
+.info
+{
+    color: #878787;
+    font-size: 0.7em;
+    margin-bottom: 10px;
+}
+
+.info a
+{
+    color: #878787;
+}
+
+.maininfo
+{
+    font-size: 1.4em;
+    color: #333333;
+    margin-bottom: 10px;
 }

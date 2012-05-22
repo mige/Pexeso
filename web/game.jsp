@@ -11,37 +11,49 @@
 
 <%@include file="/header.jspf" %>
 
-<div class="left">
-    <div class="main-content">
-        <c:choose>
-            <c:when test="${requestScope.gameFinished}">
-                <h3>Konec hry.</h3>
-            </c:when>
-            <c:otherwise>
-                <c:forEach items="${sessionScope.game.getCardsList()}" var="card" varStatus="status">
-                    <c:choose>
-                        <c:when test="${!card.isFacing()}">
-                            <a href="Game?action=turn&position=${status.count}"><img src="themes/${sessionScope.theme}/back.gif" /></a>
-                        </c:when>
-                        <c:when test="${card.getIdCard() < 10}">
-                            <img src="themes/${sessionScope.theme}/0${card.getIdCard()}.gif" />
-                        </c:when>
-                        <c:otherwise>
-                            <img src="themes/${sessionScope.theme}/${card.getIdCard()}.gif" />
-                        </c:otherwise>
-                    </c:choose>
-                    <c:if test="${status.count % sessionScope.game.getWidth() == 0}">
-                        <br />
-                    </c:if>
-                </c:forEach>
-            </c:otherwise>
-        </c:choose>
-    </div>
+<div class="right">
+    <c:forEach items="${sessionScope.game.getPlayers()}" var="player">
+        ${player.getName()} ${player.getScore()}
+    </c:forEach>
+    <%@include file="/stats.jspf" %>
 </div>
 
-<div class="right">
-    Na řadě je hráč: ${sessionScope.game.getNowPlayingPlayer().getName()}
-    <%@include file="/stats.jspf" %>
+<div class="left">
+    <div class="main-content">
+        <div style="text-align: center">
+            <c:choose>
+                <c:when test="${requestScope.gameFinished}">
+                    <div class="maininfo">Konec hry.</div>
+                    <a href="index.jsp" class="submit">Začít novou hru</a>
+                </c:when>
+                <c:otherwise>
+                    <div class="maininfo"><span style="color: #666666;">Na řadě je hráč:</span> ${sessionScope.game.getNowPlayingPlayer().getName()}</div>
+                    <c:if test="${requestScope.refresh}">
+                        <div class="info">Karty se zpět otočí za 5 vteřin. Chete je <a href="Game">otočit ihned</a>?</div>
+                    </c:if>
+                    <c:forEach items="${sessionScope.game.getCardsList()}" var="card" varStatus="status">
+                        <c:choose>
+                            <c:when test="${card.isRemoved()}">
+                                <img src="themes/blank.gif" />
+                            </c:when>
+                            <c:when test="${!card.isFacing()}">
+                                <a href="Game?action=turn&position=${status.count}"><img src="themes/${sessionScope.theme}/back.gif" /></a>
+                            </c:when>
+                            <c:when test="${card.getIdCard() < 10}">
+                                <img src="themes/${sessionScope.theme}/0${card.getIdCard()}.gif" />
+                            </c:when>
+                            <c:otherwise>
+                                <img src="themes/${sessionScope.theme}/${card.getIdCard()}.gif" />
+                            </c:otherwise>
+                        </c:choose>
+                        <c:if test="${status.count % sessionScope.game.getWidth() == 0}">
+                            <br />
+                        </c:if>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </div>
 </div>
 
 <%@include file="/footer.jspf" %>

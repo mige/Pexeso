@@ -3,6 +3,7 @@ package cz.nejdr.pexeso.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 /**
  *
@@ -44,9 +45,8 @@ public class Game implements Serializable {
     public void addPlayer(Player player) {
         players.add(player);
     }
-    
-    public ArrayList<Player> getPlayers()
-    {
+
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 
@@ -74,7 +74,9 @@ public class Game implements Serializable {
         }
 
         card.setFacing(true);
-        if(move == 0) hideFacingCards();
+        if (move == 0) {
+            hideFacingCards();
+        }
         move++;
         if (move == 2) {
             move = 0;
@@ -100,30 +102,58 @@ public class Game implements Serializable {
 
         return true;
     }
-    
-    public void hideFacingCards()
-    {
-        if(hideCards.size() != 2) return;
-        
+
+    public void hideFacingCards() {
+        if (hideCards.size() != 2) {
+            return;
+        }
+
         hideCards.get(0).setFacing(false);
         hideCards.get(1).setFacing(false);
         hideCards.clear();
     }
-    
-    public boolean isFoundPair()
-    {
+
+    public boolean isFoundPair() {
         return foundPair;
     }
-    
-    public boolean isGameFinished()
-    {
-        if(countdown == 0) return true;
+
+    public boolean isGameFinished() {
+        if (countdown == 0) {
+            return true;
+        }
         return false;
     }
-    
-    public boolean isSecondCardFacing()
-    {
-        if(hideCards.size() == 2) return true;
+
+    public boolean isSecondCardFacing() {
+        if (hideCards.size() == 2) {
+            return true;
+        }
         return false;
+    }
+
+    /**
+     * Player or multiple players with the highest score
+     *
+     * @return ArrayList with players
+     */
+    public ArrayList<Player> getWinner() {
+        if (!isGameFinished()) {
+            return null;
+        }
+
+        Collections.sort(players);
+
+        ArrayList<Player> winners = new ArrayList<Player>();
+        Player winner = players.get(0);
+        int highestScore = winner.getScore();
+
+        for (Iterator<Player> it = players.iterator(); it.hasNext();) {
+            Player player = it.next();
+            if (player.getScore() == highestScore) {
+                winners.add(player);
+            }
+        }
+
+        return winners;
     }
 }

@@ -30,7 +30,8 @@
         <div style="text-align: center">
             <c:choose>
                 <c:when test="${requestScope.gameFinished}">
-                    <div class="maininfo">Konec hry.</div>
+                    <div class="maininfo">Konec hry</div>
+                    <div class="maininfo">${requestScope.winnertext}</div>
                     <a href="index.jsp" class="submit">Začít novou hru</a>
                 </c:when>
                 <c:otherwise>

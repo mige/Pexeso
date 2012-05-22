@@ -1,11 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.nejdr.pexeso.controller;
 
 import cz.nejdr.pexeso.model.Game;
+import cz.nejdr.pexeso.model.Player;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,6 +35,7 @@ public class GameController extends HttpServlet {
 
         String viewUrl = "/game.jsp";
         HttpSession session = request.getSession(false); // nevytvářet novou session
+
         if (session == null || session.getAttribute("game") == null) {
             request.setAttribute("error", "Relace vypršela.");
             viewUrl = "/index.jsp";
@@ -46,17 +46,28 @@ public class GameController extends HttpServlet {
             if (action != null && action.compareTo("turn") == 0) {
                 int position = Integer.parseInt(request.getParameter("position")) - 1;
                 game.turnTheCard(position);
-            }
-            else
-            {
+            } else {
                 game.hideFacingCards();
             }
 
             if (game.isGameFinished()) {
                 request.setAttribute("gameFinished", true);
-            }
-            else if(game.isSecondCardFacing())
+
+                ArrayList<Player> winners = game.getWinner();
+
+                if (winners.size() > 1) {
+                    String winnersNames = "";
+                    for (Iterator<Player> it = winners.iterator(); it.hasNext();) {
+                        Player player = it.next();
+                        winnersNames += player.getName() + "&nbsp;&nbsp;";
+                    }
+                    request.setAttribute("winnertext", "Hra skončila remízou pro: " + winnersNames);
+                } else {
+                    request.setAttribute("winnertext", "Vítězem je: " + winners.get(0).getName());
+                }
+            } else if (game.isSecondCardFacing()) {
                 request.setAttribute("refresh", true);
+            }
 
         }
 
